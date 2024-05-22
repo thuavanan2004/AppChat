@@ -1,0 +1,47 @@
+extends ../../layout/default.pug 
+include ../chat/index.pug 
+
+block sider-left 
+    .nav-friends
+        .box-head  
+            h3 Bạn bè
+            .box-search
+                span(class="icon-search")
+                    i(class="fa-solid fa-magnifying-glass")
+                form(form-search)
+                    input(type="text" placeholder="Search user")
+        include ../../partials/box-nav
+    .accept-friends(data-users-accept=user.id) 
+        each user in users   
+            div(class="box-user" user-id=user.id)
+                div(class="inner-avatar")
+                    if(user.avatar)
+                        img(
+                        src=user.avatar
+                        alt=user.fullName
+                    )
+                    else 
+                        img(src="/images/avatar-default.jpg", alt=user.fullName)
+                    
+                div(class="inner-info")
+                    div(class="inner-name") #{user.fullName}
+                    div(class="inner-buttons")
+                        button(
+                            class="btn btn-sm btn-secondary mr-1"
+                            btn-accept-friend=user.id
+                        ) Chấp nhận
+                        button(
+                            class="btn btn-sm btn-secondary mr-1"
+                            btn-refuse-friend=user.id
+                        ) Từ chối
+                        button(
+                            class="btn btn-sm btn-secondary mr-1"
+                            btn-deleted-friend
+                            disabled
+                        ) Đã xóa
+                        button(
+                            class="btn btn-sm btn-primary mr-1"
+                            btn-accepted-friend
+                            disabled
+                        ) Đã chấp nhận
+

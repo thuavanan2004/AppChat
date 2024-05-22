@@ -1,0 +1,43 @@
+extends ../../layout/default 
+
+block sider-left 
+    .block-setting
+        .block-header 
+            .header-title Settings 
+            .header-main 
+                .profile-user 
+                    .inner-avatar
+                        if(user.avatar)
+                            img(src=`${user.avatar}`, alt="avatar")
+                        else 
+                            img(src="/images/avatar-default.jpg", alt="avatar")
+                .inner-name #{user.fullName}
+        .block-main 
+            .card(style='width: 18rem;')
+                .card-header Personal Info
+                ul.list-group.list-group-flush
+                    li.list-group-item 
+                        .item-info 
+                            .inner-title Name
+                            .inner-info 
+                                span.name #{user.fullName}
+                    li.list-group-item 
+                        .item-info 
+                            .inner-title Email
+                            .inner-info 
+                                span.name #{user.email}
+                    li.list-group-item 
+                        .item-info 
+                            .inner-title Phone
+                            .inner-info 
+                                span.name #{user.phone}
+                    li.list-group-item 
+                        .item-info 
+                            .inner-title Address
+                            .inner-info 
+                                span.name #{user.address}
+                            
+                                
+                        
+           
+include ../chat/index.pug

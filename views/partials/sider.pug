@@ -1,0 +1,37 @@
+.sider-menu 
+    .nav-logo 
+        a(href="/")
+            img(src="/images/logo.e4.svg", alt="logo-default")
+    .tablist
+        .nav-item
+            a(class="fa-regular fa-user" href='/user/info')
+        .nav-item.active
+            a(class="fa-solid fa-message" href='/')
+        .nav-item 
+            a(class="fa-solid fa-user-group" href='/users/friends')
+        .nav-item 
+            a(class="fa-solid fa-list" href='/users/not-friends')
+        .nav-item 
+            a(class="fa-solid fa-gear" href="/user/edit")
+    .sider-menu-under 
+        .nav-item 
+            a(class="fa-solid fa-moon")
+        .nav-item 
+            .dropdown
+                button( data-bs-toggle='dropdown' aria-expanded='false')
+                    a(class="fa-solid fa-circle-user")
+                ul.dropdown-menu
+                    li
+                        a.dropdown-item(href='/user/info') 
+                            span Profile
+                            i(class="fa-regular fa-address-card")
+                    li
+                        a.dropdown-item(href='/user/edit') 
+                            span Setting
+                            i(class="fa-solid fa-gear")
+                    li
+                        a.dropdown-item(href='/auth/logout') 
+                            span Logout
+                            i(class="fa-solid fa-right-from-bracket")
+
+            

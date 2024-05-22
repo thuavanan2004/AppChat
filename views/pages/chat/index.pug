@@ -1,0 +1,89 @@
+include ../../mixins/alert.pug
+
+block main
+    +alert-success()
+    +alert-error()
+    
+    .user-chat 
+        .header-chat 
+            .inner-avatar 
+                img(src="/images/logo.e4.svg", alt="avatar")   
+            .inner-fullname 
+                span Chat All
+                    span(class="bagde-active")
+            .list-action 
+                i(class="fa-solid fa-magnifying-glass")
+                i(class="fa-solid fa-phone")
+                i(class="fa-solid fa-video")
+                i(class="fa-solid fa-user")
+                i(class="fa-solid fa-ellipsis")
+        .main-chat 
+            .row
+                .col-12
+                    .inner-body(my-id = user.id)
+                        each chat in chats
+                            if(user.id == chat.user_id)
+                                .inner-outgoing
+                                    if(chat.content)
+                                        .inner-content #{chat.content}
+                                    if(chat.images)
+                                        .inner-images
+                                            each image in chat.images
+                                                .inner-image
+                                                    img(src=image)
+                            else 
+                                .inner-incoming
+                                    .inner-avatar 
+                                        if(chat.avatar)
+                                            img(src=`${chat.avatar}`, alt="avatar")
+                                        else 
+                                            img(src="/images/avatar-default.jpg", alt="avatar")
+                                    .inner-right
+                                        .inner-name #{chat.userFullName}
+                                        if(chat.content)
+                                            .inner-content #{chat.content}
+                                        if(chat.images)
+                                            .inner-images
+                                                each image in chat.images
+                                                    .inner-image
+                                                        img(src=image)
+                                        
+                        div(class="inner-list-typing")
+                            //- div(class="box-typing")
+                            //-     .inner-avatar 
+                            //-         img(src="/images/avatar-default.jpg" alt="avatar")
+                            //-     .inner-right
+                            //-         div(class="inner-name") Le Van A
+                            //-         div(class="inner-dots")
+                            //-             span 
+                            //-             span 
+                            //-             span   
+        .inner-preview-images
+            div(class="custom-file-container" data-upload-id="upload-images")                                      
+        .footer-chat 
+            form(
+                class="inner-form"
+                action=""
+            )
+                input(
+                    type="text"
+                    placeholder="Nhập nội dung..."
+                    name="content"
+                    autocomplete="off"
+                )
+                .list-action
+                    span(class="btn-item button-icon" )
+                        i(class="fa-regular fa-face-smile emoji") 
+                    span(class="btn-item" button-upload-image)
+                        label(
+                            for="file-upload-with-preview-upload-images"
+                        ) 
+                            i(class="fa-regular fa-image")
+                    div(class="tooltip" role="tooltip")
+                        emoji-picker   
+                    button(class="btn-item" type="submit")
+                        i.fa-solid.fa-paper-plane
+                    
+
+                    
+                            

@@ -1,0 +1,91 @@
+extends ../../layout/default.pug 
+include ../../mixins/alert.pug
+
+block sider-left 
+    
+    .block-setting
+        form(
+            form-edit
+            action=`/user/edit/${user.id}?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            .block-header 
+                .header-title Settings  
+                .header-main 
+                    .profile-user 
+                        .inner-avatar
+                            if(user.avatar)
+                                img(src=`${user.avatar}`, alt="avatar")
+                            else 
+                                img(src="/images/avatar-default.jpg", alt="avatar")
+                        .button-edit-image
+                            i(class="fa-solid fa-pen")
+                            input(
+                                type="file"
+                                class="form-control-file d-none"
+                                id="avatar"
+                                name="avatar"
+                                accept="image/*"
+                                upload-image-input
+                            )
+                    .inner-name #{user.fullName}
+            .block-main 
+                .card(style='width: 18rem;')
+                    .card-header Personal Info
+                    ul.list-group.list-group-flush
+                        li.list-group-item 
+                            .item-info 
+                                .inner-title Name
+                                .inner-info 
+                                    span.name #{user.fullName}
+                                    input( name="fullName" type="text" input-edit class="d-none" value=user.fullName)
+                            .button-edit 
+                                i(class="fa-solid fa-pen") 
+                            button(
+                                class="button-submit d-none"
+                            ) 
+                                i(class="fa-solid fa-check")
+                        li.list-group-item 
+                            .item-info 
+                                .inner-title Email
+                                .inner-info 
+                                    span.name #{user.email}
+                                    input(name="email" type="text" input-edit class="d-none" value=user.email)
+                            .button-edit 
+                                i(class="fa-solid fa-pen") 
+                            button(
+                                class="button-submit d-none"
+                            ) 
+                                i(class="fa-solid fa-check")
+                        li.list-group-item 
+                            .item-info 
+                                .inner-title Phone
+                                .inner-info 
+                                    span.name #{user.phone}
+                                    input(name="phone" type="text" input-edit class="d-none" value=user.phone)
+                            .button-edit 
+                                i(class="fa-solid fa-pen") 
+                            button(
+                                class="button-submit d-none"
+                            ) 
+                                i(class="fa-solid fa-check")
+                        li.list-group-item 
+                            .item-info 
+                                .inner-title Address
+                                .inner-info 
+                                    span.name #{user.address}
+                                    input( name="address" type="text" input-edit class="d-none" value=user.address)
+                            .button-edit 
+                                i(class="fa-solid fa-pen") 
+                            button(
+                                class="button-submit d-none"
+                            ) 
+                                i(class="fa-solid fa-check")
+                                
+                                
+                        
+           
+include ../chat/index.pug
+    
+    

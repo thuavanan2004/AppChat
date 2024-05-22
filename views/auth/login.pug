@@ -1,0 +1,57 @@
+extends ../layout/auth.pug
+include ../mixins/alert.pug
+
+block main
+    +alert-error()
+    +alert-success()
+
+    .container
+        .row.justify-content-center
+            .col-md-8.col-lg-6.col-xl-5.col-12
+                .form-header-login
+                    .form-image     
+                        img(src="/images/chatvia.png", alt="logo")
+                    .form-content
+                        h4 Sign in 
+                        p Sign in to continue to Chatvia.
+                .form-main
+                    form(
+                        action=`/auth/login`
+                        method="POST"
+                    )
+                        div(class="form-group")
+                            label(for="email") Email
+                            .input-item
+                                span(class="icon-user")
+                                    i(class="fa-solid fa-envelope")
+                                input(
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    required
+                                )
+                        div(class="form-group")
+                            label(for="password") Mật khẩu
+                            .input-item
+                                span(class="icon-user")
+                                    i(class="fa-solid fa-lock")
+                                input(
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    required
+                            )
+                        div(class="form-group")
+                            button(
+                                type="submit"
+                                class="btn btn-primary btn-block"
+                        ) Sign in
+                .form-footer
+                    .content-register 
+                        p  Don't have an account ? 
+                        .button-register
+                            a(href="/auth/register") Signup now
+                    .copyright  © 2024 Chatvia. Crafted with  by Themesbrand
+

@@ -1,0 +1,35 @@
+extends ../../layout/default.pug 
+include ../chat/index.pug 
+
+block sider-left 
+    .nav-friends
+        .box-head  
+            h3 Bạn bè
+            .box-search
+                span(class="icon-search")
+                    i(class="fa-solid fa-magnifying-glass")
+                form(form-search)
+                    input(type="text" placeholder="Search user")
+        include ../../partials/box-nav
+    .list-request 
+        each user in users   
+            div(class="box-user add")
+                div(class="inner-avatar")
+                    if(user.avatar)
+                        img(
+                        src=user.avatar
+                        alt=user.fullName
+                    )
+                    else 
+                        img(src="/images/avatar-default.jpg", alt=user.fullName)
+                div(class="inner-info")
+                    div(class="inner-name") #{user.fullName}
+                    div(class="inner-buttons")
+                        button(
+                            class="btn btn-sm btn-primary mr-1"
+                            btn-add-friend=user.id
+                        ) Kết bạn
+                        button(
+                            class="btn btn-sm btn-secondary mr-1"
+                            btn-cancel-friend=user.id
+                        ) Hủy

@@ -1,0 +1,12 @@
+extends ../layout/auth.pug 
+include ../mixins/alert.pug
+
+block main
+    +alert-success()
+    +alert-error()
+
+    a(href="/auth/login") 
+        button(class="btn btn-primary" ) Đăng nhập
+    a(href="/auth/register") 
+        button(class="btn btn-primary" ) Đăng ký
+    

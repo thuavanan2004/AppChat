@@ -1,0 +1,19 @@
+.box-nav
+    .nav-item.active
+        
+        a(
+            class="btn btn-primary"
+            href="/users/friends"
+        ) Danh sách bạn bè
+    .nav-item
+        a(
+            class="btn btn-primary"
+            href="/users/request"
+        ) Lời mời đã gửi
+            span( class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" badge-users-request=user.id) #{user.requestFriends.length >= 99  ?  "99+" : user.requestFriends.length}
+    .nav-item
+        a(
+            class="btn btn-primary"
+            href="/users/accept"
+        ) Lời mời kết bạn
+            span( class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" badge-users-accept=user.id) #{user.acceptFriends.length >= 99  ?  "99+" : user.acceptFriends.length}
