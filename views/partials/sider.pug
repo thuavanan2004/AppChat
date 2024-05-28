@@ -13,13 +13,32 @@
             a(class="fa-solid fa-list" href='/users/not-friends')
         .nav-item 
             a(class="fa-solid fa-gear" href="/user/edit")
-    .sider-menu-under 
-        .nav-item 
-            a(class="fa-solid fa-moon")
-        .nav-item 
+        .nav-item.nav-profile
             .dropdown
                 button( data-bs-toggle='dropdown' aria-expanded='false')
-                    a(class="fa-solid fa-circle-user")
+                    .inner-image
+                        img(src=`${user.avatar ? user.avatar : "/images/avatar-default.jpg"}`, alt=user.fullName)
+                ul.dropdown-menu
+                    li
+                        a.dropdown-item(href='/user/info') 
+                            span Profile
+                            i(class="fa-regular fa-address-card")
+                    li
+                        a.dropdown-item(href='/user/edit') 
+                            span Setting
+                            i(class="fa-solid fa-gear")
+                    li
+                        a.dropdown-item(href='/auth/logout') 
+                            span Logout
+                            i(class="fa-solid fa-right-from-bracket")
+    .sider-menu-under 
+        //- .nav-item 
+        //-     a(class="fa-solid fa-moon")
+        .nav-item.nav-profile-under
+            .dropdown
+                button( data-bs-toggle='dropdown' aria-expanded='false')
+                    .inner-image
+                        img(src=`${user.avatar ? user.avatar : "/images/avatar-default.jpg"}`, alt=user.fullName)
                 ul.dropdown-menu
                     li
                         a.dropdown-item(href='/user/info') 

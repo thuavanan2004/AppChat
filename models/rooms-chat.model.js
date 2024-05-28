@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const roomChatSchema  = new mongoose.Schema(
 {
     title: String,
-    // avatar: String,
+    avatar: String,
     typeRoom: String,
-    // status: String,
+    status: String,
     users: [
         {
-        user_id: String,
-        role: String
+            user_id: String,
+            role: String
         }
     ],
     deleted: {

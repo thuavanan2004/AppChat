@@ -1,5 +1,4 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js';
-
 // show-alert
 const showAlert = document.querySelector("[show-alert]");
 
@@ -53,12 +52,28 @@ function setActiveBoxNavItem() {
       }
     });
   }
+}
+function setActiveItemInListchat() {
+  const currentURL = window.location.pathname; 
+  const listItemInListChat = document.querySelectorAll(".chat-leftsider .data-list-chat .item");
+  if(listItemInListChat.length > 0){
+    // const itemActive = document.querySelector("data-list-chat a[href='/users/friends']");
+    listItemInListChat.forEach((item) => {
+      const itemURL = item.getAttribute("href"); 
+      if (currentURL === itemURL) {
+        item.classList.add("active"); 
+      } else {
+        item.classList.remove("active"); 
+      }
+    });
+  }
   
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   setActiveSidebarItem(); 
   setActiveBoxNavItem();
+  setActiveItemInListchat();
 });
 // End Sider Active 
 
@@ -124,11 +139,12 @@ if(formChat){
     event.preventDefault();
     const content = formChat.content.value || "";
     const images = upload.cachedFileArray || [];
+
     if(content || images){
       socket.emit("CLIENT_SEND_MESSAGE", {
         content: content,
         images: images
-      });
+      }); 
       formChat.content.value = "";
       socket.emit("CLIENT_SEND_TYPING", "hidden");
       upload.resetPreviewPanel();
@@ -146,7 +162,7 @@ socket.on("SEVER_RETURN_MESSAGE", (data) => {
 
   let htmlContent = "";
   let htmlImages = "";
-
+  
   if(myId == data.user_id) {
     div.classList.add("inner-outgoing")
     htmlContent +=
@@ -171,7 +187,7 @@ socket.on("SEVER_RETURN_MESSAGE", (data) => {
     if(data.content){
       htmlContent += 
       `<div class="inner-avatar">
-        <img src=${data.avatar} />
+        <img src=${data.avatar || "../images/avatar-default.jpg"} />
       </div>
       <div class="inner-right">
         <div class="inner-name">${data.fullName}</div>
@@ -230,7 +246,9 @@ socket.on("SERVER_RETURN_TYPING", (data) => {
       if(data){
         let htmlTyping = 
         `
-          <div class="inner-avatar"></div>
+          <div class="inner-avatar">
+            <img src=${data.avatar || "../images/avatar-default.jpg"}>
+          </div>
           <div class="inner-right">
             <div class="inner-name">${data.fullName}</div>
             <div class="inner-dots">
@@ -288,7 +306,7 @@ if(formEdit){
 // Form Edit 
 
 // Button Edit Image 
-const uploadImageInput = document.querySelector("[upload-image-input]");
+const uploadImageInput = document.querySelector("[upload-image-input-edit]");
 if(uploadImageInput){
   const buttonEditImage = document.querySelector(".button-edit-image");
   buttonEditImage.addEventListener("click", () => {
@@ -304,4 +322,71 @@ if(listImages.length > 0) {
     new Viewer(images);
   })  
 }
+  
 // End Preview Image Chat 
+
+// Upload-image-preview
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage){
+    const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+    const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
+    uploadImageInput.addEventListener("change", () => {
+        const file = uploadImageInput.files[0];
+        console.log(file)
+        if(file) {
+          uploadImagePreview.src = URL.createObjectURL(file);
+        }
+        uploadImagePreview.closest(".inner-image").classList.add("show");
+        new Viewer(uploadImagePreview);
+        uploadImagePreview.closest(".form-group").querySelector("label[for='avatar']").classList.add("d-none")
+    });
+}
+// End Upload-image-preview
+
+/// Responsive
+const itemUser = document.querySelectorAll(".chat-leftsider .item");
+if (itemUser.length > 0) {
+  const chatLeftSider = document.querySelector(".chat-leftsider");
+  const blockMain = document.querySelector(".block-main");
+  const buttonBack = document.querySelector(".inner-back");
+
+  itemUser.forEach(user => {
+    user.addEventListener("click", () => {
+      // Lưu trạng thái vào Local Storage
+      localStorage.setItem("chatLeftSiderState", "hidden");
+      localStorage.setItem("blockMainState", "active");
+      localStorage.setItem("buttonBackState", "visible");
+    });
+  });
+
+  buttonBack.addEventListener("click", () => {
+    chatLeftSider.classList.remove("chat-leftsider-none");
+    blockMain.classList.remove("main-block");
+    buttonBack.classList.remove("btn-back-inline");
+
+    // Cập nhật trạng thái trong Local Storage
+    localStorage.removeItem("chatLeftSiderState");
+    localStorage.removeItem("blockMainState");
+    localStorage.removeItem("buttonBackState");
+  });
+
+  // Khi trang mới được tải
+  document.addEventListener("DOMContentLoaded", () => {
+    const listAction = document.querySelector(".header-chat .list-action");
+    if(listAction) {
+      listAction.style.display = "none"; 
+    }
+    if (localStorage.getItem("chatLeftSiderState") === "hidden") {
+      chatLeftSider.classList.add("chat-leftsider-none");
+    }
+    if (localStorage.getItem("blockMainState") === "active") {
+      blockMain.classList.add("main-block");
+    }
+    if (localStorage.getItem("buttonBackState") === "visible") {
+      buttonBack.classList.add("btn-back-inline");
+    }
+  });
+}
+// End Responsive
+
+  

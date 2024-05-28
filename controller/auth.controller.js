@@ -50,11 +50,12 @@ module.exports.register = (req, res) => {
     })
 }
 
-//[POST] /auth/login
+//[POST] /auth/register
 module.exports.registerPost = async (req, res) => {
     const account = req.body;
     account.password = md5(req.body.password);
     account.token = generateTokenHelper.generateToken(30);
+    account.statusOnline = "online";
 
     const record = new Account(account);
     await record.save(); 

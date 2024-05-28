@@ -38,6 +38,7 @@ app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
 
+
 // SocketIO
 const server = http.createServer(app);
 const io = new Server(server);

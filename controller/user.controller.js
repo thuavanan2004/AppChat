@@ -2,9 +2,9 @@ const Account = require("../models/account.model");
 const chatSocket = require("../sockets/chat.socket");
 
 // [GET] /user/info
-module.exports.info = (req, res) => {
+module.exports.info = async (req, res) => {
     // SocketIO
-    chatSocket(req, res);
+    await chatSocket(req, res);
     // End SocketIO
 
     res.render("pages/user/info", {
@@ -13,9 +13,9 @@ module.exports.info = (req, res) => {
 }
 
 // [GET] /user/edit
-module.exports.edit = (req, res) => {
+module.exports.edit = async (req, res) => {
     // SocketIO
-    chatSocket(req, res);
+    await chatSocket(req, res);
     // End SocketIO
 
     res.render("pages/user/edit", {
@@ -26,7 +26,7 @@ module.exports.edit = (req, res) => {
 // [PATCH] /user/edit
 module.exports.editPatch = async (req, res) => {
     // SocketIO
-    chatSocket(req, res);
+    await chatSocket(req, res);
     // End SocketIO
     const userId = req.params.userId;
     try{

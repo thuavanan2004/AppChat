@@ -6,11 +6,13 @@ block main
     
     .user-chat 
         .header-chat 
+            .inner-back 
+                i(class="fa-solid fa-chevron-left")
             .inner-avatar 
-                img(src="/images/logo.e4.svg", alt="avatar")   
+                img(src=roomChat.userAvatarReceive || roomChat.avatar || "/images/logo.e4.svg", alt="avatar")   
             .inner-fullname 
-                span Chat All
-                    span(class="bagde-active")
+                span #{roomChat.userFullNameReceive || roomChat.title || "Chat All" }
+                    span(class= `${roomChat.statusOnline == "online" ? "bagde-active" : ""}` ) 
             .list-action 
                 i(class="fa-solid fa-magnifying-glass")
                 i(class="fa-solid fa-phone")
@@ -35,7 +37,7 @@ block main
                                 .inner-incoming
                                     .inner-avatar 
                                         if(chat.avatar)
-                                            img(src=`${chat.avatar}`, alt="avatar")
+                                            img(src=chat.avatar , alt="avatar")
                                         else 
                                             img(src="/images/avatar-default.jpg", alt="avatar")
                                     .inner-right

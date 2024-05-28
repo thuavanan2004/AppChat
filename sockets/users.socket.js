@@ -1,4 +1,5 @@
 const Account = require("../models/account.model");
+const RoomChat = require("../models/rooms-chat.model");
 
 
 module.exports = async (req, res) => {
@@ -106,7 +107,21 @@ module.exports = async (req, res) => {
 
         //Khi A chấp nhận kết bạn với B
         socket.on("CLIENT_ACCEPT_FRIEND", async (userIdB) => {
-            
+            const dataRoomChat = {
+                typeRoom: "friend",
+                users: [
+                    {
+                        user_id: userIdA,
+                        role: "superAdmin"
+                    },
+                    {
+                        user_id: userIdB,
+                        role: "superAdmin"
+                    },
+                ],
+            }
+            const newRoomChat = new RoomChat(dataRoomChat);
+            await newRoomChat.save();
             // Thêm {user_id, room_chat_id} của B vào friendsList của A
             // Xóa id của B trong acceptFriends của A
             await Account.updateOne({
@@ -115,7 +130,7 @@ module.exports = async (req, res) => {
                 $push: {
                     friendsList: {
                         user_id: userIdB,
-                        room_chat_id: ""
+                        room_chat_id: newRoomChat.id
                     }
                 },
                 $pull: { acceptFriends: userIdB }
@@ -129,7 +144,7 @@ module.exports = async (req, res) => {
                 $push: {
                     friendsList: {
                         user_id: userIdA,
-                        room_chat_id: ""
+                        room_chat_id: newRoomChat.id
                     }
                 },
                 $pull: {requestFriends: userIdA}

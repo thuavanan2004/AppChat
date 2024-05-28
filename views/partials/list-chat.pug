@@ -8,65 +8,94 @@ block sider-left
                 i(class="fa-solid fa-magnifying-glass")
             form(form-search)
                 input(type="text" placeholder="Search messages or users")
-    .list-user-active 
-        .item
-            a(href="" class="box-user ")
-                .inner-avatar 
-                    img(src="/images/avatar-2.jpg", alt="")
-                    span(class="bagde-active") 
-                .inner-fullname Patrick
-        .item
-            a(href="" class="box-user ")
-                .inner-avatar 
-                    img(src="/images/avatar-2.jpg", alt="")
-                    span(class="bagde-active") 
-                .inner-fullname Patrick
-        .item
-            a(href="" class="box-user ")
-                .inner-avatar 
-                    img(src="/images/avatar-2.jpg", alt="")
-                    span(class="bagde-active") 
-                .inner-fullname Patrick
-        .item
-            a(href="" class="box-user ")
-                .inner-avatar 
-                    img(src="/images/avatar-2.jpg", alt="")
-                    span(class="bagde-active") 
-                .inner-fullname Patrick
+    .list-user-active
+        each user in listUserOnline 
+            .item
+                a(href=`/${user.room_chat_id}` class="box-user ")
+                    .inner-avatar 
+                        img(src=user.avatar || "/images/avatar-default.jpg", alt="")
+                        span(class="bagde-active") 
+                    .inner-fullname #{user.name}
     
     .data-list-chat
-        h5 Recent
-        .item.active
+        .row.nav-bar
+            h5.col-6 Recent
+            .col-6
+                button(class="create-group" data-bs-toggle="modal" data-bs-target="#exampleModal")
+                    i(class="fa-solid fa-plus")
+
+        a(href="/" class="item active")
             .avatar-left 
-                img(src="/images/avatar-2.jpg", alt="")
+                img(src="/images/logo.e4.svg", alt="")
                 span(class="bagde-active") 
             .content
-                .inner-fullname Patrick
-                .message-new hey! there I'm available 
-            .time-send 02:50 PM
-        .item
-            .avatar-left 
-                img(src="/images/avatar-2.jpg", alt="")
-                span(class="bagde-active") 
-            .content
-                .inner-fullname Patrick
-                .message-new hey! there I'm available 
-            .time-send 02:50 PM
-        .item
-            .avatar-left 
-                img(src="/images/avatar-2.jpg", alt="")
-                span(class="bagde-active") 
-            .content
-                .inner-fullname Patrick
-                .message-new hey! there I'm available 
-            .time-send 02:50 PM
-        .item
-            .avatar-left 
-                img(src="/images/avatar-2.jpg", alt="")
-                span(class="bagde-active") 
-            .content
-                .inner-fullname Patrick
-                .message-new hey! there I'm available 
-            .time-send 02:50 PM
-       
+                .inner-fullname Chat All
+                .message-new #{roomChat.contentAt}
+            .time-send  #{roomChat.sendAt}
+        each room in listRoomChat
+            a(href=`/${room.id}` class="item")
+                .avatar-left 
+                    img(src=room.avatar || "/images/avatar-default.jpg", alt="")
+                    span(class= `${room.statusOnline == "online" ? "bagde-active" : ""}` ) 
+                .content
+                    .inner-fullname #{room.title}
+                    .message-new #{room.contentAt}
+                .time-send #{room.sendAt}   
+        
+        //- Modal 
+        #exampleModal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+            .modal-dialog.modal-create-group
+                form(
+                    action=`/create`
+                    method="POST"
+                    enctype="multipart/form-data"
+                )
+                    .modal-header
+                        h1#exampleModalLabel.modal-title.fs-5 Tạo nhóm
+                        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                    .modal-body
+                        .form-header
+                            div(class="form-group" upload-image)
+                                label(for="avatar")
+                                    i(class="fa-solid fa-camera")
+                                input(
+                                    type="file"
+                                    class="form-control-file d-none"
+                                    id="avatar"
+                                    name="avatar"
+                                    accept="image/*"
+                                    upload-image-input
+                                )
+                                .inner-image.d-none
+                                    img(upload-image-preview class="inner-image-priview ")
+                            div(class="form-group")
+                                label(for="title") Tên nhóm
+                                input(
+                                    type="text"
+                                    class="form-control"
+                                    id="title"
+                                    name="title"
+                                    required
+                                )
+                        div(class="form-group")
+                            label Thêm thành viên
+                            each friend in friendsList
+                                div(class="form-check")
+                                    input(
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        value=friend.user_id
+                                        id=`user-${friend.user_id}`
+                                        name="usersId"
+                                    )
+                                    .inner-info
+                                        .inner-avatar 
+                                            img(src="/images/avatar-default.jpg")
+                                        label(
+                                            class="form-check-label"
+                                            for=`user-${friend.user_id}`
+                                        ) #{friend.fullName}
+                    .modal-footer
+                        div(class="form-group")
+                            button.btn.btn-primary.btn-create(type='submit') Tạo
 

@@ -41,14 +41,20 @@ module.exports.friends = async (req, res) => {
     // SocketIO
     usersSocket(req, res);
     // End SocketIO
+    const userId = res.locals.user.id;
     const friendsList = res.locals.user.friendsList.map(user => user.user_id);
     const users = await Account.find({
         _id: {$in: friendsList},
         deleted: false
-    }).select("avatar fullName statusOnline");
+    }).select("avatar fullName statusOnline friendsList");
 
+    for (const user of users) {
+        const roomChatId = user.friendsList.find(friend => friend.user_id == userId)
+        user.room_chat_id = roomChatId.room_chat_id;
+    }
+    
     res.render("pages/users/friends.pug", {
-        pageTitle: "Danh sách bạn bè",
+        pageTitle: "Danh sách bạn bè", 
         users: users
     });
 }

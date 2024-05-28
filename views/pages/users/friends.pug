@@ -27,9 +27,10 @@ block sider-left
                         span #{user.fullName}
                             span(class=`${user.statusOnline == "online" ? "bagde-active" : ""}` bagde-active) 
                     div(class="inner-buttons")
-                        button(
+                        a(
                             class="btn btn-sm btn-primary mr-1"
                             btn-chat-friend=user.id
+                            href=`/${user.room_chat_id}`
                         ) Nhắn tin
                         //- button(
                         //-     class="btn btn-sm btn-secondary mr-1"

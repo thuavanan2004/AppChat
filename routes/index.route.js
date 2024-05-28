@@ -6,6 +6,7 @@ const usersRoute = require("./users.route");
 
 const requireAuthMiddleware = require("../middleware/requireAuth.middleware");
 const chatMiddleware = require("../middleware/chat.middleware");
+
 const userMiddleware = require("../middleware/user.middleware");
 
 module.exports = (app) => {
@@ -13,9 +14,9 @@ module.exports = (app) => {
 
     app.use("/auth", authRoute);
 
-    app.use("/", requireAuthMiddleware.requireAuth, chatMiddleware.chat, chatRoute);
+    app.use("/", requireAuthMiddleware.requireAuth, chatMiddleware.chatAll,  chatRoute);
 
-    app.use("/user", requireAuthMiddleware.requireAuth, chatMiddleware.chat, userRoute);
+    app.use("/user", requireAuthMiddleware.requireAuth, chatMiddleware.chatAll, userRoute);
 
-    app.use("/users", requireAuthMiddleware.requireAuth, chatMiddleware.chat, usersRoute);
-}
+    app.use("/users", requireAuthMiddleware.requireAuth, chatMiddleware.chatAll, usersRoute); 
+}  
